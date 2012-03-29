@@ -1,0 +1,58 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<script type="application/x-javascript">
+var x = 10;
+var initX = 190;
+var initY = 300;
+
+var canvas;
+var ctx
+function draw_init() {
+	canvas = document.getElementById("canvas");
+	ctx = canvas.getContext("2d");
+	kick();
+}
+
+var s = 1.8;
+
+function draw(x) {
+	//ctx.fillStyle = 'rgba(' + parseInt((Math.sin(x) * 120)+128) + ',' + parseInt((Math.sin(x * .9) * 120)+128) + ',' + parseInt((Math.sin(x*.8) * 120)+128) + ',0.6)';
+	
+	ctx.fillStyle = 'rgba(' + parseInt((Math.sin(x) * 120)+128) + ',' + parseInt((Math.sin(x * .9) * 120)+128) + ',' + parseInt((Math.sin(x*.8) * 120)+128) + ',0.6)';
+	ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+
+	var ox = (Math.sin(x) * 120);
+	var oy = (Math.cos(x / 3) * 120);
+
+	var myx = (Math.cos(x) * 40 * s) + initX + ox;
+	var myy = (Math.sin(x) * 40 * s) + initY + oy;
+
+	var bx1 = (Math.cos(x) * 10 * s) + initX + ox;
+	var by1 = (Math.sin(x) * 120 * s) + initY + oy;
+
+	var bx2 = (Math.sin(x * 3) * 120 * s) + initX + ox;
+	var by2 = (Math.cos(x * 3) * 120 * s) + initY + oy;
+
+
+	ctx.beginPath();
+	ctx.moveTo(myx, myy);
+	ctx.bezierCurveTo( bx1, by1, bx2 , by2 ,  myx, myy);
+
+	
+
+	ctx.fill();
+	ctx.stroke();
+
+}
+
+function kick() {
+	x += .05;
+	draw(x);
+	draw(x + Math.PI * 3);
+	setTimeout("kick()", 50 );
+}
+</script>
+</head><body onload="draw_init()">
+<canvas id="canvas" width="600" height="600"></canvas>
+</body></html>
